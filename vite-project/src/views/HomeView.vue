@@ -1,6 +1,6 @@
 <script setup>
-import CityCard from '../components/CityCard.vue'
-import { ref } from 'vue'
+import { ref, provide } from 'vue'
+import CityCard from '@/components/CityCard.vue'
 
 const location = ref('')
 const globalPop = 8091031090
@@ -49,8 +49,10 @@ async function fetchData() {
 
   create()
 }
-
+</script>
+<script>
 let bubbles = []
+
 const map = 
 new Datamap({
   element: document.getElementById('container'),
@@ -75,8 +77,7 @@ map.svg.call(zoom)
 
 function create() {
   console.log(bubbles)
-
-  setTimeout(() => { 
+    setTimeout(() => { 
       map.bubbles(bubbles, {
         popupTemplate: function(geo, data) {
             return '<div class="hover">' +
@@ -87,11 +88,12 @@ function create() {
         }})
   }, 1000)
 }
+export {bubbles}
 </script>
+
 
 <template>
   <main>
-    <CityCard />
     <form @submit.prevent="fetchData()">
       <input v-model="location" type="text" id="name" placeholder="Input Location Name"/>
     </form>
