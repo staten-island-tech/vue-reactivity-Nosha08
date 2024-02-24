@@ -4,15 +4,15 @@ import CityCard from '@/components/CityCard.vue'
 
 const location = ref('')
 const globalPop = 8091031090
-let total = ref(localStorage.getItem('total') ? parseFloat(localStorage.getItem('total')) : 0)
-let population = ref(localStorage.getItem('population') ? parseFloat(localStorage.getItem('population')) : 0)
+let total = ref(parseFloat(localStorage.getItem('total')) || 0)
+let population = ref(parseFloat(localStorage.getItem('population')) || 0)
 
 async function fetchData() {
   const key = 'Kx1r7YwFeSKRRUgRBUs4Ng==1l7XCqxVaMONZ1fv'
   console.log('Location:', location.value)
 
   if (bubbles.some(bubble => bubble.city === location.value)) {
-    alert('Location already entered');
+    alert('Location already entered')
   } else {
       try {
         const response = await fetch(`https://api.api-ninjas.com/v1/city?name=${location.value}`, {
@@ -99,7 +99,7 @@ function create() {
                    'City: ' + data.city +
                    '<br/>Population: ' + data.population.toLocaleString('en-US') +
                    '<br/>Percentage: ' + data.percentage.toFixed(3) + ('%') +
-                   '</div>';
+                   '</div>'
         }})
   }, 1000)
 }
