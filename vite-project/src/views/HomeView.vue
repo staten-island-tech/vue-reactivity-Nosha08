@@ -2,8 +2,6 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import CityCard from '@/components/CityCard.vue'
 
-let Datamap
-
 const location = ref('')
 const globalPop = 8091031090
 let total = ref(parseFloat(localStorage.getItem('total')) || 0)
@@ -66,10 +64,6 @@ window.onbeforeunload = () => {
   localStorage.removeItem('population')
 }
 
-onMounted(async () => {
-  const module = await import('datamaps')
-  Datamap = module.default
-})
 </script>
 
 <script>
