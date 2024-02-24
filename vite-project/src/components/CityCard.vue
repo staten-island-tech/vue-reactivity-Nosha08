@@ -15,10 +15,13 @@ const props = defineProps({
 <style scoped>
 
 .city {
-  background-color: red;
+  background-color: #2397cc;
+  border: 2px solid #1547d1;
   width: 250px;
   height: 300px;
-  border-radius: 6px;
-  margin: 5px;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1);
 }
 </style>
