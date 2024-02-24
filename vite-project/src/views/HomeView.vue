@@ -63,7 +63,6 @@ window.onbeforeunload = () => {
   localStorage.removeItem('total')
   localStorage.removeItem('population')
 }
-
 </script>
 
 <script>
