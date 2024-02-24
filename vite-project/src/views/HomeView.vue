@@ -1,55 +1,70 @@
 <script setup>
-import { ref, provide } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import CityCard from '@/components/CityCard.vue'
 
 const location = ref('')
 const globalPop = 8091031090
-let total = ref(0)
-let population = ref(0)
+let total = ref(localStorage.getItem('total') ? parseFloat(localStorage.getItem('total')) : 0)
+let population = ref(localStorage.getItem('population') ? parseFloat(localStorage.getItem('population')) : 0)
 
 async function fetchData() {
   const key = 'Kx1r7YwFeSKRRUgRBUs4Ng==1l7XCqxVaMONZ1fv'
   console.log('Location:', location.value)
 
-  try {
-    const response = await fetch(`https://api.api-ninjas.com/v1/city?name=${location.value}`, {
-      headers: {
-        'X-Api-Key': key
+  if (bubbles.some(bubble => bubble.city === location.value)) {
+    alert('Location already entered');
+  } else {
+      try {
+        const response = await fetch(`https://api.api-ninjas.com/v1/city?name=${location.value}`, {
+          headers: {
+            'X-Api-Key': key
+          }
+        })
+        location.value = ''
+
+        if (response.ok) {
+          const data = await response.json()
+          console.log(data)
+
+          const cityPop = data[0].population
+          const percentage = cityPop/globalPop * 100
+          total.value += percentage
+          population.value += cityPop
+
+          bubbles.push({
+            latitude: data[0].latitude,
+            longitude: data[0].longitude,
+            radius: Math.sqrt(data[0].population)/750,
+            fillKey: 'bubble',
+            city: data[0].name,
+            population: data[0].population,
+            percentage: percentage,
+          })
+
+          localStorage.setItem('total', total.value)
+          localStorage.setItem('population', population.value)
+
+        } else {
+          console.error('Error:', response.status)
+          return
+        }
+
+      } catch (error) {
+        console.error('Request failed:', error)
+        alert('Invalid location name')
       }
-    })
-    location.value = ''
 
-    if (response.ok) {
-      const data = await response.json()
-      console.log(data[0])
+      create()
+      
+      }
+}
 
-      const cityPop = data[0].population
-      const percentage = cityPop/globalPop * 100
-      total.value += percentage
-      population.value += cityPop
-
-      bubbles.push({
-        latitude: data[0].latitude,
-        longitude: data[0].longitude,
-        radius: Math.sqrt(data[0].population)/750,
-        fillKey: 'bubble',
-        city: data[0].name,
-        population: data[0].population,
-        percentage: percentage
-      })
-
-    } else {
-      console.error('Error:', response.status)
-      return
-    }
-
-  } catch (error) {
-    console.error('Request failed:', error)
-  }
-
-  create()
+window.onbeforeunload = () => {
+  localStorage.removeItem('total')
+  localStorage.removeItem('population')
 }
 </script>
+
 <script>
 let bubbles = []
 

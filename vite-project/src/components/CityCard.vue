@@ -1,6 +1,8 @@
 <template>
   <div class="city">
-    <h1>{{ location.population }}</h1>
+    <h1>{{ location.city }}</h1>
+    <h2>{{ location.population.toLocaleString('en-US') }}</h2>
+    <h2>{{ location.percentage.toFixed(3) + ('%') }}</h2>
   </div>
 </template>
 
@@ -11,9 +13,12 @@ const props = defineProps({
 </script>
 
 <style scoped>
+
 .city {
   background-color: red;
   width: 250px;
-  height: 400px;
+  height: 300px;
+  border-radius: 6px;
+  margin: 5px;
 }
 </style>
