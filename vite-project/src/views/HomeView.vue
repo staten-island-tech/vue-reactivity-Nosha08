@@ -8,7 +8,7 @@ let total = ref(parseFloat(localStorage.getItem('total')) || 0)
 let population = ref(parseFloat(localStorage.getItem('population')) || 0)
 
 async function fetchData() {
-  const key = 'uaJmlrEq9S3f1pucAeRL470iYEiUNotGNOUy3Z5j'
+  const key = '/7YBTPiTKbJlF7jjnOM8Sg==zbP32sJjI0rZpK4V'
   console.log('Location:', location.value)
 
   if (bubbles.some(bubble => bubble.city === location.value)) {
@@ -63,7 +63,6 @@ window.onbeforeunload = () => {
   localStorage.removeItem('total')
   localStorage.removeItem('population')
 }
-
 </script>
 
 <script>
