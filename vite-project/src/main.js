@@ -3,8 +3,8 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { Datamap } from 'datamaps'
-import { d3 } from 'd3';
-import { topojson }  from 'topojson';
+import d3 from 'd3';
+import * as topojson from 'topojson';
 
 import App from './App.vue'
 import router from './router'
